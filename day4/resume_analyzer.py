@@ -1,11 +1,19 @@
+import os
 import json
 import requests
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 ### Confgurations ###
 GROQ_BASE_URL = "https://api.groq.com/openai/v1"
-GROK_API_KEY = ""
+GROK_API_KEY = os.environ.get("GROQ_API_KEY")
+if not GROK_API_KEY:
+    print("WARNING: GROQ_API_KEY not found in environment variables.")
+
 output_file = "resume_data.json"
+
 
 SYSTEM_PROMPT = """
 You are a smart ATS and Resume Analyzer system.
@@ -125,6 +133,8 @@ def extract_info_from_llm(md_content: str) -> dict:
         return structured_data
     except requests.exceptions.RequestException as e:
         print(f"HTTP Request failed: {e}")
+        if e.response is not None:
+             print(f"Error Response Body: {e.response.text}")
         return {}
     except json.JSONDecodeError as e:
         print(f"JSON decoding failed: {e}")

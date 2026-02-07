@@ -70,11 +70,13 @@ input_folder = "./Resumes"
 
 
 ## Function to extract the files ##
-if not os.path.exists(input_folder):
-    print("file or folder does not exist")
-else:
-    markdown_resumes = process_resumes(input_folder)
+if __name__ == "__main__":
+    if not os.path.exists(input_folder):
+        print("file or folder does not exist")
+    else:
+        markdown_resumes = process_resumes(input_folder)
 
-    if markdown_resumes:
-        print("---- sample output ----")
-        print(markdown_resumes[0])
+        if markdown_resumes:
+            print("---- sample output ----")
+            print(markdown_resumes[0])
+
